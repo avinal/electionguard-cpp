@@ -117,7 +117,7 @@ jobs:
         working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
         run: |
           dotnet build -c Release
-          dotnet pack -c Release --version-suffix "v${{ steps.sha.outputs.sha_short }}" -p:RepositoryUrl=https://github.com/${{ github.repository }}
+          dotnet pack -c Release --version-suffix "v${{ steps.sha.outputs.sha_short }}"
       - name: Get Release Version
         id: get_version
         uses: greenygh0st/net-proj-release-version@v2
@@ -138,8 +138,12 @@ jobs:
       # - name: Push to Nuget.org
       #   working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
       #   run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ github.token }}
       - name: Publish to GitHub Nuget Registry
         working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
-        run: |
-          dotnet nuget add source https://nuget.pkg.github.com/avinal/index.json -n github -u avinal -p ${{ github.token }} --store-password-in-clear-text  
-          dotnet nuget push "**/*.nupkg" -k ${{ github.token }} -s https://nuget.pkg.github.com/avinal/index.json --skip-duplicate
+        run: dotnet nuget push "**/*.nupkg"
