@@ -146,4 +146,4 @@ jobs:
           NUGET_AUTH_TOKEN: ${{ github.token }}
       - name: Publish to GitHub Nuget Registry
         working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
-        run: dotnet nuget push "**/*.nupkg"
+        run: dotnet nuget push "**/*.nupkg" --api-key ${{ github.token }} --source GitHub --skip-duplicate
