@@ -140,4 +140,6 @@ jobs:
       #   run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
       - name: Publish to GitHub Nuget Registry
         working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
-        run: dotnet nuget push "**/*.nupkg" --api-key ${{ github.token }} --source "github" --skip-duplicate
+        run: |
+          dotnet nuget add source --username avinal --password ${{ github.token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/avinal/index.json"  
+          dotnet nuget push "**/*.nupkg" --api-key ${{ github.token }} --source "github" --skip-duplicate
