@@ -135,9 +135,9 @@ jobs:
             ./build/libs/x86_64/Release/src/*.dylib
             ./build/libs/x86_64/Release/src/*.so
             ./build/libs/msvc/x64/src/Release/*.dll*
-      - name: Push to Nuget.org
-        working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
-        run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      # - name: Push to Nuget.org
+      #   working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
+      #   run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
       - name: Publish to GitHub Nuget Registry
         working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
         run: dotnet nuget push "**/*.nupkg" --api-key ${{ github.token }} --source "github" --skip-duplicate
