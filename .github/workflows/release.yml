@@ -117,7 +117,7 @@ jobs:
         working-directory: bindings/netstandard/ElectionGuard/ElectionGuard.Encryption
         run: |
           dotnet build -c Release
-          dotnet pack -c Release --version-suffix "v${{ steps.sha.outputs.sha_short }}"
+          dotnet pack -c Release --version-suffix "v${{ steps.sha.outputs.sha_short }}" -p:RepositoryUrl=https://github.com/${{ github.repository }}
       - name: Get Release Version
         id: get_version
         uses: greenygh0st/net-proj-release-version@v2
